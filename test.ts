@@ -34,7 +34,7 @@ async function main() {
     chatGPTConversationCache.push({ role: 'system', content: PROMPT })
 
     //send greeting
-    axios(`${API_GREETING}`, {
+    axios(`${API_GREETING}`, {   
         ...commonAxiosConfig,
         data: JSON.stringify({ greeting: "Politics have largely destroyed this country." + "\"" }),
     }).then(async (axiosResponse) => {
@@ -83,8 +83,6 @@ async function main() {
             //add to convo
             conversation.push({ role: 'user', response: userResponse })
             conversation.push({ role: 'system', response: JSON.parse(newContent)[0]?.response, suggestion: JSON.parse(newContent)[0]?.suggestion, error: newError })
-
-
         }
 
         console.log('Conversation Array: ')
