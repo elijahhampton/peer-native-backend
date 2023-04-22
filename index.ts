@@ -15,11 +15,6 @@ const openai = new OpenAIApi(configuration);
 const app = express()
 app.use(express.json())
 
-app.use((req, res, next) => {
-  console.log('Caught here... working')
-  res.status(404).send('Sorry, the route you are trying to access does not exist.');
-});
-
 
 app.post('/greeting', async (request, response) => {
   const PROMPT = `ChatGPT your only goal is to have a conversation with me about ${request.body.topic} in ${request.body.user_target_language}. Please stay on the topic of ${request.body.topic} for the duration of this conversation. 
@@ -52,6 +47,12 @@ app.post('/reply', async (request, response) => {
     timestamp: new Date()
   })
 })
+
+// Catch-all route (should be placed after all other route definitions)
+app.use('*', (req, res) => {
+  res.status(404).send('Sorry, the route you are trying to access does not exist.');
+});
+
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
