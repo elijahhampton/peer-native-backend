@@ -47,7 +47,19 @@ app.post('/reply', async (request, response) => {
   })
 })
 
+app.use((req, res, next) => {
+  res.status(404).send('Sorry, the route you are trying to access does not exist.');
+});
+
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong.');
+});
+
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
